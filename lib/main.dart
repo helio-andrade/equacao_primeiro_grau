@@ -13,6 +13,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Equação do 1º grau',
       home: EquacaoPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -7,10 +7,11 @@ class EquacaoPage extends StatefulWidget {
 }
 
 class _EquacaoPageState extends State<EquacaoPage> {
-  final TextEditingController _aController = TextEditingController();
-  final TextEditingController _bController = TextEditingController();
+  final TextEditingController _aController = TextEditingController(text: "");
+  final TextEditingController _bController = TextEditingController(text: "");
   final EquacaoPrimeiroGrau _equacao = EquacaoPrimeiroGrau();
   double _resultado = 0.0;
+  final _alertKey = GlobalKey();
 
   void _calcular() {
     try {
@@ -22,11 +23,20 @@ class _EquacaoPageState extends State<EquacaoPage> {
       });
     } on Exception catch (e) {
       showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: const Text("Erro"),
-                content: Text(e.toString()),
-              ));
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => AlertDialog(
+          key: _alertKey,
+          title: const Text("Erro"),
+          content: Text(e.toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -34,39 +44,55 @@ class _EquacaoPageState extends State<EquacaoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Equação do 1º grau"),
+        title: const Text("Equação do 1º grau"),
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _aController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  labelText: "Digite o valor de a",
-                  border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _bController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  labelText: "Digite o valor de b",
-                  border: OutlineInputBorder()),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _calcular,
-              child: Text("Calcular"),
-            ),
-            SizedBox(height: 16.0),
-            if (_resultado != null)
-              Text(
-                "x = $_resultado",
-                style: TextStyle(fontSize: 24.0),
-              )
-          ],
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 200.0,
+                child: TextField(
+                  controller: _aController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      labelText: "Digite o valor de a",
+                      border: OutlineInputBorder()),
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+                width: 200.0,
+              ),
+              SizedBox(
+                width: 200.0,
+                child: TextField(
+                  controller: _bController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      labelText: "Digite o valor de b",
+                      border: OutlineInputBorder()),
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+                width: 200.0,
+              ),
+              ElevatedButton(
+                onPressed: _calcular,
+                child: Text("Calcular"),
+              ),
+              SizedBox(height: 16.0),
+              if (_resultado != null)
+                Text(
+                  "x = $_resultado",
+                  style: TextStyle(fontSize: 24.0),
+                )
+            ],
+          ),
         ),
       ),
     );
