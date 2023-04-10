@@ -12,6 +12,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
   final EquacaoPrimeiroGrau _equacao = EquacaoPrimeiroGrau();
   double _resultado = 0.0;
   final _alertKey = GlobalKey();
+  final FocusNode aFocus = FocusNode();
 
   void _calcular() {
     try {
@@ -25,19 +26,30 @@ class _EquacaoPageState extends State<EquacaoPage> {
       showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (_) => AlertDialog(
+        builder: (BuildContext context) => AlertDialog(
           key: _alertKey,
           title: const Text("Erro"),
           content: Text(e.toString()),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
+              focusNode: aFocus,
               child: const Text('OK'),
             ),
           ],
         ),
       );
     }
+  }
+
+  void _limparCampos() {
+    _aController.text = "";
+    _bController.text = "";
+    setState(() {
+      _resultado = 0.0;
+    });
+// Foca no primeiro campo
+    FocusScope.of(context).requestFocus(aFocus);
   }
 
   @override
@@ -49,7 +61,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -65,7 +77,6 @@ class _EquacaoPageState extends State<EquacaoPage> {
               ),
               SizedBox(
                 height: 16.0,
-                width: 200.0,
               ),
               SizedBox(
                 width: 200.0,
@@ -79,11 +90,22 @@ class _EquacaoPageState extends State<EquacaoPage> {
               ),
               SizedBox(
                 height: 16.0,
-                width: 200.0,
               ),
-              ElevatedButton(
-                onPressed: _calcular,
-                child: Text("Calcular"),
+              SizedBox(
+                width: 200.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _calcular,
+                      child: Text("Calcular"),
+                    ),
+                    ElevatedButton(
+                      onPressed: _limparCampos,
+                      child: Text("Limpar"),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 16.0),
               if (_resultado != null)
