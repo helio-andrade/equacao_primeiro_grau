@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'solucao.dart';
 
 class EquacaoPage extends StatefulWidget {
+  const EquacaoPage({super.key});
+
   @override
   _EquacaoPageState createState() => _EquacaoPageState();
 }
@@ -65,17 +67,19 @@ class _EquacaoPageState extends State<EquacaoPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // Coeficiente de x
               SizedBox(
                 width: 200.0,
                 child: TextField(
                   controller: _aController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Digite o valor de a",
                       border: OutlineInputBorder()),
                 ),
               ),
-              SizedBox(
+              // Termo independente
+              const SizedBox(
                 height: 16.0,
               ),
               SizedBox(
@@ -83,12 +87,12 @@ class _EquacaoPageState extends State<EquacaoPage> {
                 child: TextField(
                   controller: _bController,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: "Digite o valor de b",
                       border: OutlineInputBorder()),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16.0,
               ),
               SizedBox(
@@ -96,22 +100,24 @@ class _EquacaoPageState extends State<EquacaoPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // Botão calcular
                     ElevatedButton(
                       onPressed: _calcular,
-                      child: Text("Calcular"),
+                      child: const Text("Calcular"),
                     ),
+                    // Botão limpar
                     ElevatedButton(
                       onPressed: _limparCampos,
-                      child: Text("Limpar"),
+                      child: const Text("Limpar"),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 16.0),
-              if (_resultado != null)
+              const SizedBox(height: 16.0),
+              if (_resultado != 0.0)
                 Text(
                   "x = $_resultado",
-                  style: TextStyle(fontSize: 24.0),
+                  style: const TextStyle(fontSize: 24.0),
                 )
             ],
           ),
