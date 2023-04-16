@@ -11,7 +11,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Equação do 1º grau',
+      title: 'ax² + bx + c = 0',
       home: EquacaoPage(),
       debugShowCheckedModeBanner: false,
     );

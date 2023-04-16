@@ -11,7 +11,8 @@ class EquacaoPage extends StatefulWidget {
 class _EquacaoPageState extends State<EquacaoPage> {
   final TextEditingController _aController = TextEditingController(text: "");
   final TextEditingController _bController = TextEditingController(text: "");
-  final EquacaoPrimeiroGrau _equacao = EquacaoPrimeiroGrau();
+  final TextEditingController _cController = TextEditingController(text: "");
+  final Equacao _equacao = Equacao();
   double _resultado = 0.0;
   final _alertKey = GlobalKey();
   final FocusNode aFocus = FocusNode();
@@ -20,6 +21,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
     try {
       double a = double.parse(_aController.text);
       double b = double.parse(_bController.text);
+      double c = double.parse(_cController.text);
       double resultado = _equacao.calcular(a, b);
       setState(() {
         _resultado = resultado;
@@ -47,6 +49,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
   void _limparCampos() {
     _aController.text = "";
     _bController.text = "";
+    _cController.text = "";
     setState(() {
       _resultado = 0.0;
     });
@@ -58,7 +61,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Equação do 1º grau"),
+        title: const Text("ax² + bx + c = 0"),
         centerTitle: true,
       ),
       body: Center(
@@ -67,18 +70,17 @@ class _EquacaoPageState extends State<EquacaoPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Coeficiente de x
+              // Valor de a
               SizedBox(
                 width: 200.0,
                 child: TextField(
                   controller: _aController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "Digite o valor de a",
-                      border: OutlineInputBorder()),
+                      labelText: "a = ", border: OutlineInputBorder()),
                 ),
               ),
-              // Termo independente
+              // Valor de b
               const SizedBox(
                 height: 16.0,
               ),
@@ -88,8 +90,20 @@ class _EquacaoPageState extends State<EquacaoPage> {
                   controller: _bController,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: "Digite o valor de b",
-                      border: OutlineInputBorder()),
+                      labelText: "b = ", border: OutlineInputBorder()),
+                ),
+              ),
+              // Valor de c
+              const SizedBox(
+                height: 16.0,
+              ),
+              SizedBox(
+                width: 200.0,
+                child: TextField(
+                  controller: _cController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      labelText: "c = ", border: OutlineInputBorder()),
                 ),
               ),
               const SizedBox(
