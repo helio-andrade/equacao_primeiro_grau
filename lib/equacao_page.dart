@@ -22,7 +22,7 @@ class _EquacaoPageState extends State<EquacaoPage> {
       double a = double.parse(_aController.text);
       double b = double.parse(_bController.text);
       double c = double.parse(_cController.text);
-      double resultado = _equacao.calcular(a, b);
+      double resultado = _equacao.calcular(a, b, c);
       setState(() {
         _resultado = resultado;
       });
